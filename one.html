@@ -1,1 +1,46 @@
-Hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS55.13 Week 2</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="application"></div>
+        <script data-type="module" data-presets="react" type="text/babel">
+            "use strict";
+            //loading react 
+              import React from 'https://cdn.jsdelivr.net/npm/react@19.1.1/+esm';
+            // load createRoot 
+            import { createRoot } from 'https://cdn.jsdelivr.net/npm/react-dom@19.1.1/client/+esm';
+            //creating react component
+            function ListDisplay(props) {
+                return <div>
+                    <h2>List of People and Hometowns</h2>
+                    <ul>
+                        {props.list.map(
+                            (person, index) => (
+                                <li key={index}>{person.name} is from <strong>{person.hometown}</strong>
+                                    </li>
+                            )
+                        )}
+                        </ul>
+                    </div>
+            }
+            //fetching data from json file
+            $.getJSON(
+                "people",
+                function(getJSON){
+                    console.log(getJSON);
+                    const source = document.getElementById('application');
+                    const root = createRoot(source);
+                    root.render(
+                        <ListDisplay list={getJSON}/>
+                    );
+                }
+            );
+        </script>
+</body>
+</html>
